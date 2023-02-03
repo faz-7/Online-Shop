@@ -29,6 +29,6 @@ class Product(models.Model):
     )
     status = models.CharField(max_length=1, choices=STATUS)
     information = models.TextField(blank=True, default='empty')
-    cost = models.IntegerField()
+    cost = models.FloatField()
     # todo: write func to calculate cost by considering discount
     # todo: write method to add parent of category to m2m interface table

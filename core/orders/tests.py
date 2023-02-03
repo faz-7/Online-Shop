@@ -15,11 +15,12 @@ class ProductModelsTest(TestCase):
         # create customer instance
         self.user = Customer.objects.create(username='user1', password='123')
 
-        self.order = Order.objects.create(user=self.user, cost=(2 * 42))
+        self.order = Order.objects.create(user=self.user, status='U')
         self.order_item = OrderItem.objects.create(order=self.order, product=self.product, number=2)
+        self.order_item2 = OrderItem.objects.create(order=self.order, product=self.product, number=1)
 
     def test_order_item(self):
         self.assertEqual(self.order_item.cost, (self.product.cost * self.order_item.number))
 
     def test_order(self):
-        self.assertEqual(self.order.user, self.user)
+        self.assertEqual(self.order.cost, self.order_item.cost)

@@ -17,6 +17,7 @@ class Discount(models.Model):
 class Category(models.Model):
     parent = models.ForeignKey("self", on_delete=models.CASCADE, null=True, blank=True)
     name = models.CharField(max_length=20)
+
     # categories= models.ManyToManyField('Product', related_name="category_id")
     # if both needs access the interface table
 

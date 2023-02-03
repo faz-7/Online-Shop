@@ -1,3 +1,34 @@
+from django.core.validators import RegexValidator
 from django.db import models
 
-# Create your models here.
+
+class Discount(models.Model):
+    amount = models.CharField(max_length=2, validators=[RegexValidator(r'^\d{1,10}$')])
+    TYPES = (
+        ('P', 'Percent'),
+        ('C', 'Cash'),
+    )
+    type = models.CharField(max_length=1, choices=TYPES)
+
+
+class Category(models.Model):
+    parent = models.ForeignKey("self", on_delete=models.CASCADE, null=True, blank=True)
+    name = models.CharField(max_length=20)
+    # categories= models.ManyToManyField('Product', related_name="category_id")
+    # if both needs access the interface table
+
+
+class Product(models.Model):
+    categories = models.ManyToManyField(Category)
+    discounts = models.ManyToManyField(Discount, blank=True)
+    name = models.CharField(max_length=20)
+    brand = models.CharField(max_length=20, blank=True, default='empty')
+    STATUS = (
+        ('E', 'Exist'),
+        ('F', 'Finish'),
+    )
+    status = models.CharField(max_length=1, choices=STATUS)
+    information = models.TextField(blank=True, default='empty')
+    cost = models.IntegerField()
+    # todo: write func to calculate cost by considering discount
+    # todo: write method to add parent of category to m2m interface table

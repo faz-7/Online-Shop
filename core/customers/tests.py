@@ -2,7 +2,6 @@ from django.test import TestCase
 from .models import Customer, Address
 
 
-# Create your tests here.
 class CustomerModelsTest(TestCase):
     def setUp(self):
         self.customer = Customer.objects.create(username='user1', password='123')
@@ -14,4 +13,4 @@ class CustomerModelsTest(TestCase):
         self.assertEqual(str(self.customer), self.customer.username)
 
     def test_address(self):
-        self.assertEqual(self.customer, self.address.user_id)
+        self.assertEqual(self.customer, self.address.user)

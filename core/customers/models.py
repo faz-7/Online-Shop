@@ -16,7 +16,7 @@ class Customer(models.Model):
 
 
 class Address(models.Model):
-    user_id = models.ForeignKey(Customer, on_delete=models.CASCADE)
+    user = models.ForeignKey(Customer, on_delete=models.CASCADE)
     province = models.CharField(max_length=50)
     city = models.CharField(max_length=50)
     avenue = models.CharField(max_length=50)

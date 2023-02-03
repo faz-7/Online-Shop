@@ -12,7 +12,8 @@ class Customer(models.Model):
                                     help_text='without leading zero')
     email = models.EmailField(blank=True, default='empty', help_text='example@example.com')
 
-    # todo: write str and admin.register
+    def __str__(self):
+        return f'id:{self.pk}, username:{self.username}'
 
 
 class Address(models.Model):
@@ -21,3 +22,6 @@ class Address(models.Model):
     city = models.CharField(max_length=50)
     avenue = models.CharField(max_length=50)
     plate = models.CharField(max_length=3, validators=[RegexValidator(r'^\d{1,10}$')])
+
+    def __str__(self):
+        return f'user_id:{self.user.id}, province:{self.province}'

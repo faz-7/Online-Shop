@@ -10,12 +10,18 @@ class Discount(models.Model):
     )
     type = models.CharField(max_length=1, choices=TYPES)
 
+    def __str__(self):
+        return f'type:{self.type}, amount:{self.amount}'
+
 
 class Category(models.Model):
     parent = models.ForeignKey("self", on_delete=models.CASCADE, null=True, blank=True)
     name = models.CharField(max_length=20)
     # categories= models.ManyToManyField('Product', related_name="category_id")
     # if both needs access the interface table
+
+    def __str__(self):
+        return f'name:{self.name}'
 
 
 class Product(models.Model):
@@ -32,3 +38,6 @@ class Product(models.Model):
     cost = models.FloatField()
     # todo: write func to calculate cost by considering discount
     # todo: write method to add parent of category to m2m interface table
+
+    def __str__(self):
+        return f'name:{self.name}, cost:{self.cost}'

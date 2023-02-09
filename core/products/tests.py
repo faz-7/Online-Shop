@@ -7,7 +7,8 @@ class ProductModelsTest(TestCase):
         self.main_category = Category.objects.create(name='hygienic')
         self.sub_category = Category.objects.create(name='cosmetic', parent=self.main_category)
         self.discount = Discount.objects.create(amount='20', type='P')
-        self.product = Product.objects.create(name='desk', status='E', cost=42)
+        self.product = Product.objects.create(name='desk', image='static/img/macbook.jpg', description='empty',
+                                              price=42, available=True)
         self.product.categories.add(self.sub_category)
         self.product.discounts.add(self.discount)
 

@@ -3,36 +3,21 @@ from customers.models import Customer
 from products.models import Product
 
 
-class Order(models.Model):
-    user = models.ForeignKey(Customer, on_delete=models.CASCADE)
-    STATUS = (
-        ('P', 'Paid'),
-        ('U', 'Unpaid'),
-    )
-    status = models.CharField(max_length=1, choices=STATUS)
+class Order(models.Model):  # todo: write method return cost of order using related_name
+    user = models.ForeignKey(Customer, on_delete=models.CASCADE, related_name='orders')
+    paid = models.BooleanField(default=False)
 
-    def update_cost(self, new_item_price):  # todo: make it better work!
-        items = OrderItem.objects.filter(order_id__exact=self.pk)
-        res = sum(item.get_computed() for item in items)
-        self.cost = res + new_item_price
-        self.save()
+    class Meta:
+        ordering = ('paid',)
 
     def __str__(self):
-        return f'user_id:{self.user.pk}, cost:{self.cost}'
+        return f'user_id:{self.user.pk}'
 
 
-class OrderItem(models.Model):
-    order = models.ForeignKey(Order, on_delete=models.CASCADE)
+class OrderItem(models.Model):  # todo: write method to calculate each orderItem price
+    order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='items')
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    number = models.IntegerField()
-
-    def get_computed(self):
-        return self.product.cost * self.number
-
-    def save(self, *args, **kwargs):
-        self.cost = self.get_computed()
-        self.order.update_cost(self.cost)
-        super(OrderItem, self).save(*args, **kwargs)
+    quantity = models.IntegerField(default=1)
 
     def __str__(self):
         return f'order_id:{self.order.pk}, product:{self.product.name}'

@@ -10,6 +10,7 @@ class Customer(AbstractBaseUser, PermissionsMixin):
     image = models.ImageField(upload_to='customers/')
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
+    is_staff = models.BooleanField(default=False)
 
     objects = UserManager()
 
@@ -18,7 +19,3 @@ class Customer(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.email
-
-    @property
-    def is_staff(self):
-        return self.is_admin

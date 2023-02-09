@@ -33,7 +33,7 @@ class Product(models.Model):  # todo: write func to calculate cost by considerin
     name = models.CharField(max_length=20)
     image = models.ImageField()
     brand = models.CharField(max_length=20, blank=True, default='empty')
-    description = RichTextField()
+    description = models.TextField()
     price = models.IntegerField()
     available = models.BooleanField(default=True)
 

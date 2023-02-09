@@ -4,9 +4,10 @@ from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from .managers import UserManager
 
 
-class Customer(AbstractBaseUser, PermissionsMixin):
+class Customer(AbstractBaseUser, PermissionsMixin):  # todo: fix staff as always false
     full_name = models.CharField(max_length=100)
     email = models.EmailField(max_length=255, unique=True)
+    # todo: validate phone number
     phone_number = models.CharField(max_length=11, unique=True)
     image = models.ImageField(upload_to='customers/')
     is_active = models.BooleanField(default=True)

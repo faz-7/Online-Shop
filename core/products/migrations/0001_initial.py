@@ -18,7 +18,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('name', models.CharField(max_length=20)),
-                ('parent', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='product.category')),
+                ('parent', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='products.category')),
             ],
         ),
         migrations.CreateModel(
@@ -38,8 +38,8 @@ class Migration(migrations.Migration):
                 ('cost', models.IntegerField()),
                 ('status', models.CharField(choices=[('E', 'Exist'), ('F', 'Finish')], max_length=1)),
                 ('information', models.TextField(blank=True, default='empty')),
-                ('category_id', models.ManyToManyField(to='product.category')),
-                ('discount_id', models.ManyToManyField(to='product.discount')),
+                ('category_id', models.ManyToManyField(to='products.category')),
+                ('discount_id', models.ManyToManyField(to='products.discount')),
             ],
         ),
     ]

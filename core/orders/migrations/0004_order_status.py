@@ -11,7 +11,7 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AddField(
-            model_name='order',
+            model_name='orders',
             name='status',
             field=models.CharField(choices=[('P', 'Paied'), ('U', 'Unpaied')], default='U', max_length=1),
             preserve_default=False,

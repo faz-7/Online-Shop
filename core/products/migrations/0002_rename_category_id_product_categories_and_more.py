@@ -6,17 +6,17 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('product', '0001_initial'),
+        ('products', '0001_initial'),
     ]
 
     operations = [
         migrations.RenameField(
-            model_name='product',
+            model_name='products',
             old_name='category_id',
             new_name='categories',
         ),
         migrations.RenameField(
-            model_name='product',
+            model_name='products',
             old_name='discount_id',
             new_name='discounts',
         ),

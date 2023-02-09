@@ -10,7 +10,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('customers', '0004_rename_user_id_address_user'),
-        ('product', '0004_alter_product_cost'),
+        ('products', '0004_alter_product_cost'),
     ]
 
     operations = [
@@ -28,8 +28,8 @@ class Migration(migrations.Migration):
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('number', models.IntegerField()),
                 ('cost', models.FloatField()),
-                ('order', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='orders.order')),
-                ('product', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='product.product')),
+                ('orders', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='orders.orders')),
+                ('products', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='products.products')),
             ],
         ),
     ]

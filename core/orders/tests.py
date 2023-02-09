@@ -1,13 +1,13 @@
 from django.test import TestCase
 
 from customers.models import Customer
-from product.models import Category, Product
+from products.models import Category, Product
 from .models import Order, OrderItem
 
 
 class ProductModelsTest(TestCase):
     def setUp(self):
-        # create product instance
+        # create products instance
         self.category = Category.objects.create(name='hygienic')
         self.product = Product.objects.create(name='desk', status='E', cost=42)
         self.product.categories.add(self.category)

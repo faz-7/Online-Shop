@@ -1,4 +1,5 @@
 from django.contrib import admin
+from admins.models import Manager, Supervisor, Operator
 from .models import Product, Discount, Category
 
 
@@ -27,3 +28,8 @@ class ProductAdmin(admin.ModelAdmin):
     list_display = ("name", "price", "available")
     list_filter = ("name", "price")
     search_fields = ("name", "brand")
+
+    def has_change_permission(self, request, obj=None):
+        if isinstance(request.user, Supervisor) or isinstance(request.user, Operator):
+            return False
+        return True

@@ -1,26 +1,16 @@
 from django.core.validators import RegexValidator
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
-from .managers import UserManager
+from accounts.models import User
 
 
-class Customer(AbstractBaseUser, PermissionsMixin):  # todo: fix staff as always false
+class Customer(User):  # todo: fix staff as always false
     full_name = models.CharField(max_length=100)
-    email = models.EmailField(max_length=255, unique=True)
     # todo: validate phone number
     phone_number = models.CharField(max_length=11, unique=True)
     image = models.ImageField(upload_to='customers/')
-    is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
-
-    objects = UserManager()
-
-    USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = []
-
-    def __str__(self):
-        return self.email
 
 
 class Address(models.Model):

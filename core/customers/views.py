@@ -19,10 +19,11 @@ class CustomerRegisterView(View):
         form = self.form(request.POST)
         if form.is_valid():
             cd = form.cleaned_data
-            Customer.objects.create_user(cd['email'], cd['full_name'],
-                                         cd['phone_number'], cd['password'])
+            Customer.objects.create_user(cd['email'], cd['password'], phone_number=cd['phone_number'],
+                                         full_name=cd['full_name'])
+
             messages.success(request, 'registered successfully', 'success')
-            return redirect('home:home')
+            return redirect('products:landing')
         return render(request, self.template_name, {'form': form})
 
 
@@ -30,7 +31,7 @@ class CustomerLogoutView(LoginRequiredMixin, View):
     def get(self, request):
         logout(request)
         messages.success(request, 'Logged out successfully', 'success')
-        return redirect('home:home')
+        return redirect('products:landing')
 
 
 class CustomerLoginView(View):
@@ -49,6 +50,6 @@ class CustomerLoginView(View):
             if user is not None:
                 login(request, user)
                 messages.success(request, 'Logged in successfully', 'info')
-                return redirect('home:home')
+                return redirect('products:landing')
             messages.error(request, 'phone or password is wrong', 'warning')
         return render(request, self.template_name, {'form': form})

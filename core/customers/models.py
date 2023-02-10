@@ -8,7 +8,7 @@ class Customer(User):  # todo: fix staff as always false
     full_name = models.CharField(max_length=100)
     # todo: validate phone number
     phone_number = models.CharField(max_length=11, unique=True)
-    image = models.ImageField(upload_to='customers/')
+    image = models.ImageField(upload_to='customers/', default='macbook.jpg')
     is_admin = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
 

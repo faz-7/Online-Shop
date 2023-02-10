@@ -1,5 +1,6 @@
 from django.core.validators import RegexValidator
 from django.db import models
+from django.urls import reverse
 from ckeditor.fields import RichTextField
 
 
@@ -23,6 +24,9 @@ class Category(models.Model):
         ordering = ('name',)
         verbose_name_plural = 'categories'
 
+    def get_absolute_url(self):
+        return reverse('products:category_filter', args=[self.id, ])
+
     def __str__(self):
         return f'name:{self.name}'
 
@@ -39,6 +43,9 @@ class Product(models.Model):  # todo: write func to calculate cost by considerin
 
     class Meta:
         ordering = ('name',)
+
+    def get_absolute_url(self):
+        return reverse('products:product_detail', args=[self.id, ])
 
     def __str__(self):
         return f'name:{self.name}, cost:{self.price}'

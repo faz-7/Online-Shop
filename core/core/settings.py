@@ -36,10 +36,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'accounts.apps.AccountsConfig',
-    'customers.apps.CustomersConfig',
     'orders.apps.OrdersConfig',
     'products.apps.ProductConfig',
-    'admins.apps.AdminsConfig',
 ]
 
 MIDDLEWARE = [
@@ -134,4 +132,17 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-AUTH_USER_MODEL = 'customers.Customer'
+AUTH_USER_MODEL = 'accounts.User'
+
+AUTHENTICATION_BACKENDS = (
+        'django.contrib.auth.backends.RemoteUserBackend',
+        'django.contrib.auth.backends.ModelBackend',
+)
+
+# AUTHENTICATION_BACKENDS = (
+#     # Needed to login by custom User model, regardless of `allauth`
+#     "django.contrib.auth.backends.ModelBackend",
+#
+#     # `allauth` specific authentication methods, such as login by e-mail
+#     "allauth.account.auth_backends.AuthenticationBackend",
+# )

@@ -1,10 +1,10 @@
 from django.db import models
-from customers.models import Customer
+from accounts.models import User
 from products.models import Product
 
 
 class Order(models.Model):  # todo: write method return cost of order using related_name
-    user = models.ForeignKey(Customer, on_delete=models.CASCADE, related_name='orders')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='orders')
     paid = models.BooleanField(default=False)
 
     class Meta:

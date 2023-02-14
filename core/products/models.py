@@ -1,3 +1,4 @@
+from django.core.exceptions import ValidationError
 from django.core.validators import RegexValidator
 from django.db import models
 from django.urls import reverse
@@ -39,15 +40,22 @@ class Product(models.Model):  # todo: write func to calculate cost by considerin
 
 class Discount(models.Model):  # todo: write validation for amount not greater than 100% or amount
     product = models.ForeignKey(Product, related_name='products', on_delete=models.CASCADE)
-    amount = models.CharField(max_length=2, validators=[RegexValidator(r'^\d{1,10}$')])
     TYPES = (
         ('P', 'Percent'),
         ('C', 'Cash'),
     )
     type = models.CharField(max_length=1, choices=TYPES)
+    amount = models.IntegerField()
 
     def __str__(self):
         return f'type:{self.type}, amount:{self.amount}'
+
+    # def clean_amount(self, exclude=None): # todo: handle this in DiscountCreationForm
+    #     super().clean_fields(exclude=exclude)
+    #     if (self.type == 'P' and self.amount >= 100) or (self.type == 'C' and self.amount >= self.product.price):
+    #         raise ValidationError(
+    #             _('Invalid amount for discount!')
+    #         )
 
 # link to calculate price by considering discount :
 # https://docs.djangoproject.com/en/4.1/topics/db/examples/many_to_one/

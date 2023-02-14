@@ -8,6 +8,7 @@ class UserRegistrationForm(forms.Form):
     full_name = forms.CharField(label='full name')
     phone_number = forms.CharField(max_length=11)
     password = forms.CharField(widget=forms.PasswordInput)
+    confirm_password = forms.CharField(widget=forms.PasswordInput)
 
     def clean_email(self):
         email = self.cleaned_data['email']
@@ -22,6 +23,13 @@ class UserRegistrationForm(forms.Form):
         if user:
             raise ValidationError('Phone number already exists')
         return phone
+
+    def clean_confirm_password(self):
+        password = self.cleaned_data['password']
+        confirm_password = self.cleaned_data['confirm_password']
+        if password != confirm_password:
+            raise ValidationError('confirm password does not match password')
+        return confirm_password
 
 
 class UserLoginForm(forms.Form):

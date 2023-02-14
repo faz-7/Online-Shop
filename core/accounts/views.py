@@ -51,5 +51,5 @@ class UserLoginView(View):
                 login(request, user)
                 messages.success(request, 'Logged in successfully', 'info')
                 return redirect('products:landing')
-            messages.error(request, 'phone or password is wrong', 'warning')
+            messages.error(request, 'email or password is wrong', 'warning')
         return render(request, self.template_name, {'form': form})

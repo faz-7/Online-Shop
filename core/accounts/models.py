@@ -8,8 +8,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(max_length=255, unique=True)
 
     full_name = models.CharField(max_length=100)
-    # todo: validate phone number
-    phone_number = models.CharField(max_length=11, unique=True)
+    phone_number = models.CharField(validators=[RegexValidator(r'^\+?1?\d{9,10}$')], max_length=11, unique=True)
     image = models.ImageField(upload_to='accounts/', default='/static/img/user_default_avatar.png')
 
     is_active = models.BooleanField(default=True)

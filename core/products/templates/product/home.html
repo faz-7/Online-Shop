@@ -2,33 +2,78 @@
 {% load static %}
 
 {% block extra_headers %}
-<link rel="stylesheet" href="{% static 'home/css/style.css' %}">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{% static 'accounts/css/bootstrap.min.css' %}">
+    <!-- Main Style CSS -->
+    <link rel="stylesheet" href="{% static 'accounts/css/style.css' %}">
+
 {% endblock %}
 
 {% block content %}
 
-    {% for category in categories %}
+    <!--Body Content-->
+    <div id="page-content">
 
-        <div class="btn-group">
-            <a href="{{ category.get_absolute_url }}" class="btn btn-info">{{ category.name }}</a>
-            <button type="button" class="btn btn-info dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
-                <span class="visually-hidden">Toggle Dropdown</span>
-            </button>
-            <ul class="dropdown-menu">
-                {% for sub in category.children.all %}
-                <li><a class="dropdown-item" href="{{ sub.get_absolute_url }}">{{ sub.name }}</a></li>
-                {% endfor %}
-            </ul>
-        </div>
+        <!--Hand-picked Items-->
+        <div class="section">
+        	<div class="container-fluid">
+            	<div class="row">
+                	<div class="col-12 col-sm-12 col-md-12 col-lg-12">
+						<div class="grid-products">
+                            <div class="row">
+                                {% for product in products %}
+                                    <div class="col-6 col-sm-6 col-md-3 col-lg-3 item">
+                                        <!-- start product image -->
+                                        <div class="product-image">
+                                            <!-- start product image -->
+                                            <a href="{{ product.get_absolute_url }}" class="grid-view-item__link">
+                                                <!-- image -->
+                                                <img class="primary blur-up lazyload" src="{{ product.image.url }}" alt="image" title="product">
+                                                <img class="hover blur-up lazyload" src="{{ product.image.url }}" alt="image" title="product">
+                                                <!-- End image -->
+                                            </a>
+                                            <!-- end product image -->
 
-    {% endfor %}
-    <br/><br/>
-    {% for product in products %}
-        <div class="card" style="width: 18rem; display:inline-block;">
-            <img src="{{ product.image.url }}" class="card-img-top">
-            <div class="card-body">
-                <a href="{{ product.get_absolute_url }}" class="card-title">{{ product.name }}</a>
+                                            <!-- Start product button -->
+                                            <form class="variants add" action="#" onclick="window.location.href='cart.html'" method="post">
+                                                <button class="btn btn-addto-cart" type="button" tabindex="0">Add To Cart</button>
+                                            </form>
+                                            <!-- end product button -->
+                                        </div>
+                                        <!-- end product image -->
+
+                                        <!--start product details -->
+                                        <div class="product-details text-center">
+                                            <!-- product name -->
+                                            <div class="product-name">
+                                                <a href="{{ product.get_absolute_url }}" class="card-title">{{ product.name }}</a>
+                                            </div>
+                                            <!-- End product name -->
+                                        </div>
+                                        <!-- End product details -->
+                                    </div>
+                                {% endfor %}
+                                </div>
+                            </div>
+                		</div>
+                    </div>
+            	</div>
             </div>
         </div>
-    {% endfor %}
+        <!--End Hand-picked Items-->
+
+     {% block scripts %}
+         <script src="{% static 'products/js/jquery-3.3.1.min.js' %}"></script>
+         <script src="{% static 'products/js/modernizr-3.6.0.min.js' %}"></script>
+         <script src="{% static 'products/js/jquery.cookie.js' %}"></script>
+         <script src="{% static 'products/js/wow.min.js' %}"></script>
+         <!-- Including Javascript -->
+         <script src="{% static 'products/js/bootstrap.min.js' %}"></script>
+         <script src="{% static 'products/js/plugins.js' %}"></script>
+         <script src="{% static 'products/js/popper.min.js' %}"></script>
+         <script src="{% static 'products/js/lazysizes.js' %}"></script>
+         <script src="{% static 'products/js/main.js' %}"></script>
+    {% endblock %}
+
 {% endblock %}

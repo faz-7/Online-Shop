@@ -79,8 +79,8 @@ audio:not([controls]) { display:none; height:0; }
 html, button, input, select, textarea { font-family:'Poppins', sans-serif; }
 input:focus, textarea:focus, select:focus { border-color:#cdcfd3; }
 input, textarea { padding:10px 18px; }
-select { -webkit-appearance:none; -moz-appearance:none; appearance:none; background-position:right center; background-image:url(../images/arrow-select.png) !important; background-repeat:no-repeat !important; 
-	background-position:right 10px center !important; line-height:1.2; text-indent:0.01px; text-overflow: ''; cursor:pointer; padding-bottom:8px 28px 8px 15px; }
+select { -webkit-appearance:none; -moz-appearance:none; appearance:none; background-position:right center; !important; background-repeat:no-repeat !important;
+	background-position:right 10px center !important; line-height:1.2; text-indent:0.01px; text-overflow: '';}
 
 iframe { border:0; width:100%; }
 
@@ -155,7 +155,7 @@ th { font-family:"Roboto Slab",Helvetica,Tahoma,Arial,serif; font-weight:700; }
 /* Text specialized */
 .text-italic { font-style: italic; }
 .text-normal { font-style: normal; }
-.text-underline { font-style: underline; }
+.text-underline { text-decoration: underline; }
 /* Font specialized */
 .body-font { font-family: "Poppins", sans-serif; }
 .heading-font { font-family: "Poppins", sans-serif; }
@@ -1038,7 +1038,7 @@ table { margin-bottom:15px; width:100%; border-collapse:collapse; border-spacing
 .password-table { display:table; height:100%; width:100%; }
 .password-cell { width:50%; display:table-cell; vertical-align:middle; text-align:center; position:relative; }
 .password-page { background:none !important; display:table; height:100%; width:100%; color:#555; background-color:#fff; background-size:cover; }
-.password-table .password-cell { background:url(../images/coming-soon.jpg); background-repeat:no-repeat; background-position:50% 50%; background-size:cover; }
+.password-table .password-cell { background-repeat:no-repeat; background-position:50% 50%; background-size:cover; }
 .password-header { position:absolute; right:0; }
 .password-main { width:100%; height:100%; margin:0 auto; display:table; vertical-align:middle; }
 .password-main__inner { display:table-cell; vertical-align: middle; padding:15px 30px; }
@@ -1113,7 +1113,7 @@ table { margin-bottom:15px; width:100%; border-collapse:collapse; border-spacing
 .card-header:before{ content:"\f078"; font-family:'FontAwesome'; font-size:13px; position:absolute; right:10px; top:9px; color:#555; }
 .payment-accordion .card .card-header { background-color:#fff; }
 .payment-accordion .card .card-header a { display:block; font-size:16px; font-weight:500; text-transform:uppercase; }
-.order-button-payment .btn { font-size:18px; font-size:700; padding: 10px 20px; }
+.order-button-payment .btn { font-size:18px; padding: 10px 20px; }
 .customer-box .discount-coupon, .customer-box .customer-info { background-color:#f7f7f7; padding:20px; }
 .create-ac-content, .your-order-payment { border:1px solid #ddd; padding:20px; }
 .create-ac-content .form-check { margin-left:15px; }
@@ -1431,7 +1431,7 @@ body.home8-jewellery { font-size:14px; }
   28.12 Home 13 - Autoparts  ------------
   ---------------------------------------*/
 .store-feature-top { background:#000000; padding:7px !important; text-align:center; border-bottom:1px solid #000000; }
-.flex { display:flex; display:-ms-flexbox; display:-webkit-flexbox; }
+.flex { display:flex; display:-ms-flexbox; display: -webkit-box; }
 .flex .flex-item { flex:1; }
 .flex-item { color:#ffffff; font-size:13px; font-weight:400; text-transform:none; }
 
@@ -1578,7 +1578,7 @@ body.home15-funiture-template { font-size:14px; }
 .newsletter-left .social li { display:inline-block; margin:0 5px; list-style:none }
 .newsletter-left .social a { border-radius:50%; color:#141515; display:inline-block; font-size:18px; height:30px; line-height:20px; padding:5px; text-align:center; width:30px }
 .newsletter-left #Subscribe { width:100%; height:auto; padding:12px 20px }
-.newsletter-left #Subscribe:hover {  background:!important }
+.newsletter-left #Subscribe:hover {}
 
 /*======================================================================
   33. Footer

@@ -7,16 +7,39 @@
     <link rel="stylesheet" href="{% static 'accounts/css/bootstrap.min.css' %}">
     <!-- Main Style CSS -->
     <link rel="stylesheet" href="{% static 'accounts/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'products/css/category.css' %}">
 
 {% endblock %}
 
 {% block content %}
 
     <!--Body Content-->
-    <div id="page-content">
+    <div id="page-content" class="container d-md-flex align-items-stretch">
+        <nav id="sidebar">
+            <div class="p-4 pt-5">
+                <h5>Categories</h5>
+                <ul class="list-unstyled components mb-5">
+
+                    {% for category in categories %}
+                        <li>
+                            <a href="{{ category.get_absolute_url }}" >
+                                <span style="color: #0c0101" >{{ category.name }}</span>
+                                <a href="#dropdown" style="display: inline-block" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"></a>
+                            </a>
+                            {% for sub in category.children.all %}
+                              <ul class="collapse list-unstyled" id="dropdown">
+                                  <li><a href="{{ sub.get_absolute_url }}"><span class="fa fa-chevron-right mr-2"></span>{{ sub.name }}</a></li>
+                              </ul>
+                            {% endfor %}
+                        </li>
+                    {% endfor %}
+
+                </ul>
+            </div>
+        </nav>
 
         <!--Hand-picked Items-->
-        <div class="section">
+        <div class="p-4 p-md-5 pt-5">
         	<div class="container-fluid">
             	<div class="row">
                 	<div class="col-12 col-sm-12 col-md-12 col-lg-12">
@@ -60,7 +83,9 @@
                     </div>
             	</div>
             </div>
-        </div>
+
+
+
         <!--End Hand-picked Items-->
 
      {% block scripts %}
@@ -74,6 +99,10 @@
          <script src="{% static 'products/js/popper.min.js' %}"></script>
          <script src="{% static 'products/js/lazysizes.js' %}"></script>
          <script src="{% static 'products/js/main.js' %}"></script>
+
+         <script src="{% static 'products/js/jquery.min.js' %}"></script>
+         <script src="{% static 'products/js/popper.js' %}"></script>
+
     {% endblock %}
 
 {% endblock %}

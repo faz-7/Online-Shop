@@ -12,6 +12,9 @@
 <body>
 
     {% include 'include/navbar.html' %}
+    {% if request.user.is_authenticated %}
+            <span style="color: crimson; display: flex; align-items: center; justify-content: center">Welcome {{ request.user.full_name }}</span>
+    {% endif %}
     <div class="jumbotron">
         {% include 'include/messages.html' %}
         {% block content %} {% endblock %}

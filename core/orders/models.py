@@ -3,9 +3,11 @@ from accounts.models import User
 from products.models import Product
 
 
-class Order(models.Model):  # todo: write method return cost of order using related_name
+class Order(models.Model):  # todo: write method return cost of order using related_name add date
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='orders')
     paid = models.BooleanField(default=False)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
 
     class Meta:
         ordering = ('paid',)

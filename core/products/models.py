@@ -19,7 +19,7 @@ class Category(models.Model):
         return f'name:{self.name}'
 
 
-class Product(models.Model):  # todo: write func to calculate cost by considering discount
+class Product(models.Model):
     categories = models.ManyToManyField(Category, related_name='product_category')
     name = models.CharField(max_length=20)
     image = models.ImageField()
@@ -37,6 +37,12 @@ class Product(models.Model):  # todo: write func to calculate cost by considerin
     def __str__(self):
         return f'name:{self.name}, cost:{self.price}'
 
+    def get_final_price(self):
+        discount = Discount.objects.get(product=self)
+        if discount.type == 'P':
+            return self.price * (1 - discount.amount / 100)
+        return self.price - discount.amount
+
 
 class Discount(models.Model):  # todo: write validation for amount not greater than 100% or amount
     product = models.ForeignKey(Product, related_name='products', on_delete=models.CASCADE)
@@ -53,9 +59,8 @@ class Discount(models.Model):  # todo: write validation for amount not greater t
     # def clean_amount(self, exclude=None): # todo: handle this in DiscountCreationForm
     #     super().clean_fields(exclude=exclude)
     #     if (self.type == 'P' and self.amount >= 100) or (self.type == 'C' and self.amount >= self.product.price):
-    #         raise ValidationError(
-    #             _('Invalid amount for discount!')
-    #         )
+    #         raise ValidationError('Invalid amount for discount!')
+    #     return self.amount
 
 # link to calculate price by considering discount :
 # https://docs.djangoproject.com/en/4.1/topics/db/examples/many_to_one/

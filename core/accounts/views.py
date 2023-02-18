@@ -49,7 +49,7 @@ class UserLoginView(View):
             user = authenticate(request, email=cd['email'], password=cd['password'])
             if user is not None:
                 login(request, user)
-                messages.success(request, 'Logged in successfully', 'info')
+                messages.success(request, f'{user.full_name} Logged in successfully', 'info')
                 return redirect('products:landing')
             messages.error(request, 'email or password is wrong', 'warning')
         return render(request, self.template_name, {'form': form})

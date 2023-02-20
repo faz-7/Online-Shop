@@ -79,16 +79,16 @@
                                         <p>{{ product.description }}</p>
                                     </div>
 
-                                    <form method="post" action="" id="quantity" class="product-form product-form-product-template hidedropdown" enctype="multipart/form-data">
+                                    <form method="post" action="{% url 'orders:cart_add' product.id %}" id="quantity_form" enctype="multipart/form-data">
 
                                         <div class="product-action clearfix">
-
                                             <div class="product-form__item--quantity" style="background-color: lightgrey">
                                                 <div class="wrapQtyBtn">
                                                     <div class="qtyField">
 
                                                         <a id="minus" style="background-color: lightgrey"><i class="fa fa-minus"></i></a>
-                                                        <input type="number" value="1" id="input" />
+                                                        {% csrf_token %}
+                                                        <input type="number" name="quantity" value="1" min="1" max="50" id="quantity" />
                                                         <a id="plus" style="background-color: lightgrey"><i class="fa fa-plus"></i></a>
 
                                                     </div>
@@ -96,13 +96,11 @@
                                             </div>
 
 
-                                            <div class="product-form__item--submit">
-                                                <button type="button" name="add" class="btn product-form__cart-submit">
-                                                    <span>Add to cart</span>
-                                                </button>
+                                            <div class="product-form__item--submit form-group">
+                                                <input type="submit" name="add" class="btn product-form__cart-submit" value="Add to cart">
                                             </div>
-
                                         </div>
+
                                     </form>
 
                                 </div>

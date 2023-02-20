@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_headers %}
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{% static 'accounts/css/bootstrap.min.css' %}">
+    <!-- Main Style CSS -->
+    <link rel="stylesheet" href="{% static 'accounts/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'products/css/category.css' %}">
+
+{% endblock %}
+
+{% block content %}
+    <div class="pageWrapper">
+
+        <!--Body Content-->
+        <div id="page-content">
+            <!--Page Title-->
+            <div class="page section-header text-center">
+                <div class="page-title">
+                    <div class="wrapper"><h1 class="page-width">Your cart</h1></div>
+                </div>
+            </div>
+            <!--End Page Title-->
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 main-col">
+                        <form action="" method="post" class="cart style2">
+                            <table>
+                                <thead class="cart__row cart__header">
+                                    <tr>
+                                        <th colspan="2">Product</th>
+                                        <th class="text-left">Price</th>
+                                        <th class="text-center">Quantity</th>
+                                        <th class="text-right">Total</th>
+                                        <th class="action text-center">Remove</th>
+                                    </tr>
+                                </thead>
+
+                                {% for item in cart %}
+                                    <tbody>
+                                        <tr class="cart__row border-bottom line1 cart-flex border-top">
+                                            <td class="cart__image-wrapper cart-flex-item">
+                                                <img class="cart__image" src="{{ item.product.image.url }}" alt="Elastic Waist Dress - Navy / Small">
+                                            </td>
+
+                                            <td class="cart__meta small--text-left cart-flex-item">
+                                                <div class="list-view-item__title">
+                                                    <a href="{% url 'products:product_detail' item.product.id %}">{{ item.product.name }} </a>
+                                                </div>
+                                            </td>
+
+                                            <td class="cart__price-wrapper cart-flex-item">
+                                                <span class="money">{{ item.price }}</span>
+                                            </td>
+
+                                            <td class="cart__update-wrapper cart-flex-item text-right" >
+                                                <div class="cart__qty text-center">
+                                                    <div class="qtyField" style="background-color: lightgrey">
+
+                                                        <a id="minus" style="background-color: whitesmoke"><i class="fa fa-minus"></i></a>
+                                                        {% csrf_token %}
+                                                        <input type="number" name="quantity" id="quantity" value="{{ item.quantity }}" pattern="[0-9]*">
+                                                        <input type="hidden" class="visually-hidden" name="item_id" id="item_id" value="{{ item.product.id }}">
+                                                        <a id="plus" style="background-color: whitesmoke"><i class="fa fa-plus"></i></a>
+
+                                                    </div>
+                                                </div>
+                                            </td>
+
+                                            <td class="text-right small--hide cart-price">
+                                                <div><span class="money">{{ item.total_price }}</span></div>
+                                            </td>
+                                            <td class="text-center small--hide"><a href="{% url 'orders:cart_remove' item.product.id %}" class="btn btn--secondary cart__remove" title="Remove tem"><i class="fa fa-trash-o"></i></a></td>
+
+                                        </tr>
+                                    </tbody>
+                                {% endfor %}
+
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="5" class="text-left"><a href="{% url 'products:landing' %}" class="btn--link cart-continue"><i class="fa fa-arrow-circle-left"></i> Continue shopping</a></td>
+                                        <td colspan="5" class="text-right"><input type="submit" name="update" value="Update &#x21bb" class="btn--link cart-update"></td>
+                                    </tr>
+                                </tfoot>
+
+                            </table>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!--End Hand-picked Items-->
+
+     {% block scripts %}
+
+         {% include 'product/include/scripts.html' %}
+         <script src="{% static 'products/js/jquery.min.js' %}"></script>
+         <script src="{% static 'products/js/popper.js' %}"></script>
+         <script src="{% static 'products/js/quantity.js' %}"></script>
+
+    {% endblock %}
+
+{% endblock %}

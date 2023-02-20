@@ -15,6 +15,9 @@ class Order(models.Model):  # todo: write method return cost of order using rela
     def __str__(self):
         return f'user_id:{self.user.pk}'
 
+    def get_total_price(self):
+        return sum(item.get_cost() for item in self.items.all())
+
 
 class OrderItem(models.Model):  # todo: write method to calculate each orderItem price
     order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='items')
@@ -23,3 +26,6 @@ class OrderItem(models.Model):  # todo: write method to calculate each orderItem
 
     def __str__(self):
         return f'order_id:{self.order.pk}, product:{self.product.name}'
+
+    def get_cost(self):
+        return self.product.price * self.quantity

@@ -35,7 +35,7 @@ class Product(models.Model):
         return reverse('products:product_detail', args=[self.id, ])
 
     def __str__(self):
-        return f'name:{self.name}, cost:{self.price}'
+        return self.name
 
     def get_final_price(self):
         discount = Discount.objects.get(product=self)

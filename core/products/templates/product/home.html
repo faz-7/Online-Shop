@@ -59,8 +59,8 @@
                                             <!-- end product image -->
 
                                             <!-- Start product button -->
-                                            <form class="variants add" action="#" onclick="window.location.href='cart.html'" method="post">
-                                                <button class="btn btn-addto-cart" type="button" tabindex="0">Add To Cart</button>
+                                            <form class="variants add" action="" onclick="window.location.href='{% url 'products:product_detail' product.id %}'" method="post" enctype="multipart/form-data">
+                                                <button class="btn btn--link" type="button" tabindex="0">View</button>
                                             </form>
                                             <!-- end product button -->
                                         </div>

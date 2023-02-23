@@ -38,7 +38,8 @@ class Cart:
             del self.cart[product_id]
             self.save()
 
-    def update(self, product_id, quantity):
+    def update(self, product, quantity):
+        product_id = str(product.id)
         self.cart[product_id]['quantity'] = quantity
         self.save()
 

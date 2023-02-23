@@ -13,9 +13,11 @@ class CartView(View):
 
     def post(self, request):
         cart = Cart(request)
-        product_id = request.POST.get('item_id')
+        product = get_object_or_404(Product, id=request.POST.get('item_id'))
+        # products = Product.objects.filter(id__in=request.POST.get('item_id'))
         quantity = int(request.POST.get('quantity'))
-        cart.update(product_id, quantity)
+        cart.update(product, quantity)
+        # return render(request, 'orders/cart.html', {'cart': cart})
         return redirect('orders:cart')
 
 

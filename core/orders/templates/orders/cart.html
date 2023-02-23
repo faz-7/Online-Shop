@@ -27,7 +27,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-12 col-sm-12 col-md-12 col-lg-12 main-col">
-                        <form action="" method="post" class="cart style2">
+{#                        <form action="" method="post" class="cart style2">#}
                             <table>
                                 <thead class="cart__row cart__header">
                                     <tr>
@@ -36,58 +36,64 @@
                                         <th class="text-center">Quantity</th>
                                         <th class="text-right">Total</th>
                                         <th class="action text-center">Remove</th>
+                                        <th class="action text-center">Update</th>
                                     </tr>
                                 </thead>
 
                                 {% for item in cart %}
-                                    <tbody>
-                                        <tr class="cart__row border-bottom line1 cart-flex border-top">
-                                            <td class="cart__image-wrapper cart-flex-item">
-                                                <img class="cart__image" src="{{ item.product.image.url }}" alt="Elastic Waist Dress - Navy / Small">
-                                            </td>
+                                    <form method="post" action="">
+                                    {% csrf_token %}
+{#                                        <tbody>#}
+                                            <tr class="cart__row border-bottom line1 cart-flex border-top">
+                                                <td class="cart__image-wrapper cart-flex-item">
+                                                    <img class="cart__image" src="{{ item.product.image.url }}" alt="Elastic Waist Dress - Navy / Small">
+                                                </td>
 
-                                            <td class="cart__meta small--text-left cart-flex-item">
-                                                <div class="list-view-item__title">
-                                                    <a href="{% url 'products:product_detail' item.product.id %}">{{ item.product.name }} </a>
-                                                </div>
-                                            </td>
-
-                                            <td class="cart__price-wrapper cart-flex-item">
-                                                <span class="money">{{ item.price }}</span>
-                                            </td>
-
-                                            <td class="cart__update-wrapper cart-flex-item text-right" >
-                                                <div class="cart__qty text-center">
-                                                    <div class="qtyField" style="background-color: lightgrey">
-
-                                                        <a id="minus" style="background-color: whitesmoke"><i class="fa fa-minus"></i></a>
-                                                        {% csrf_token %}
-                                                        <input type="number" name="quantity" id="quantity" value="{{ item.quantity }}" pattern="[0-9]*">
-                                                        <input type="hidden" class="visually-hidden" name="item_id" id="item_id" value="{{ item.product.id }}">
-                                                        <a id="plus" style="background-color: whitesmoke"><i class="fa fa-plus"></i></a>
-
+                                                <td class="cart__meta small--text-left cart-flex-item">
+                                                    <div class="list-view-item__title">
+                                                        <a href="{% url 'products:product_detail' item.product.id %}">{{ item.product.name }} </a>
                                                     </div>
-                                                </div>
-                                            </td>
+                                                </td>
 
-                                            <td class="text-right small--hide cart-price">
-                                                <div><span class="money">{{ item.total_price }}</span></div>
-                                            </td>
-                                            <td class="text-center small--hide"><a href="{% url 'orders:cart_remove' item.product.id %}" class="btn btn--secondary cart__remove" title="Remove tem"><i class="fa fa-trash-o"></i></a></td>
+                                                <td class="cart__price-wrapper cart-flex-item">
+                                                    <span class="money">{{ item.price }}</span>
+                                                </td>
 
-                                        </tr>
-                                    </tbody>
+    {#                                            <form action="" method="post">#}
+                                                    <td class="cart__update-wrapper cart-flex-item text-right" >
+                                                        <div class="cart__qty text-center">
+                                                            <div class="qtyField" style="background-color: lightgrey">
+
+
+                                                                    <a style="background-color: whitesmoke" onClick="var result = document.getElementById('{{ item.product.id }}'); var qty = result.value; if( !isNaN( qty ) &amp;&amp; qty &gt; 1 ) result.value--;return false;"><i class="fa fa-minus"></i></a>
+                                                                    <input type="number" name="quantity" id="{{ item.product.id }}" value="{{ item.quantity }}" pattern="[0-9]*">
+                                                                    <input type="hidden" class="visually-hidden" name="item_id" id="item_id" value="{{ item.product.id }}">
+                                                                    <a style="background-color: whitesmoke" onClick="var result = document.getElementById('{{ item.product.id }}'); var qty = result.value; if( !isNaN( qty )) result.value++;return false;"><i class="fa fa-plus"></i></a>
+
+
+                                                            </div>
+                                                        </div>
+                                                    </td>
+
+                                                    <td class="text-right small--hide cart-price">
+                                                        <div><span class="money">{{ item.total_price }}</span></div>
+                                                    </td>
+                                                    <td class="text-center small--hide"><a href="{% url 'orders:cart_remove' item.product.id %}" class="btn btn--secondary cart__remove" title="Remove tem"><i class="fa fa-trash-o"></i></a></td>
+                                                    <td class="text-center small--hide"><input type="submit" name="update" value="&#x21bb" class="btn btn--secondary"></td>
+                                            </tr>
+{#                                        </tbody>#}
+                                    </form>
                                 {% endfor %}
 
                                 <tfoot>
                                     <tr>
                                         <td colspan="5" class="text-left"><a href="{% url 'products:landing' %}" class="btn--link cart-continue"><i class="fa fa-arrow-circle-left"></i> Continue shopping</a></td>
-                                        <td colspan="5" class="text-right"><input type="submit" name="update" value="Update &#x21bb" class="btn--link cart-update"></td>
+{#                                        <td><input type="submit" name="update" value="Update &#x21bb" class="btn--link cart-update" style="display: block; text-align: right"></td>#}
                                     </tr>
                                 </tfoot>
-
                             </table>
-                        </form>
+
+{#                        </form>#}
                     </div>
                 </div>
             </div>

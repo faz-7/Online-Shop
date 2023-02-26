@@ -53,3 +53,8 @@ class UserLoginView(View):
                 return redirect('products:landing')
             messages.error(request, 'email or password is wrong', 'warning')
         return render(request, self.template_name, {'form': form})
+
+
+class UserProfileView(LoginRequiredMixin, View):
+    def get(self, request):
+        return render(request, 'accounts/profile.html')

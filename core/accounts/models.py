@@ -9,7 +9,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     full_name = models.CharField(max_length=100)
     phone_number = models.CharField(validators=[RegexValidator(r'^\+?1?\d{9,10}$')], max_length=11, unique=True)
-    image = models.ImageField(upload_to='accounts/', default='/static/img/user_default_avatar.png')
+    image = models.ImageField(upload_to='profile_pic', default='user_default_avatar.png')
 
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)

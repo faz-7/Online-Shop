@@ -47,7 +47,12 @@ class OrderCreateView(LoginRequiredMixin, View):
         cart = Cart(request)
         order = Order.objects.create(user=request.user)
         for item in cart:
-            OrderItem.objects.create(order=order, product=item['product'], price=item['price'],
-                                     quantity=item['quantity'])
+            OrderItem.objects.create(order=order, product=item['product'], quantity=item['quantity'])
         cart.clear()
         return redirect('orders:order_detail', order.id)
+
+
+class OrderHistoryView(LoginRequiredMixin, View):
+    def get(self, request):
+        orders = Order.objects.filter(user=request.user)
+        return render(request, 'orders/order_history.html', {'orders': orders})

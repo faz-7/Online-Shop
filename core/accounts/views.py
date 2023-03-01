@@ -1,6 +1,8 @@
+import os
+
 from django.shortcuts import render, redirect
 from django.views import View
-from .forms import UserLoginForm, UserRegistrationForm
+from .forms import UserLoginForm, UserRegistrationForm, UserChangeForm
 from django.contrib import messages
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -58,3 +60,20 @@ class UserLoginView(View):
 class UserProfileView(LoginRequiredMixin, View):
     def get(self, request):
         return render(request, 'accounts/profile.html')
+
+
+class UserUpdateProfileView(LoginRequiredMixin, View):
+    form = UserChangeForm
+    template_name = 'accounts/update_profile.html'
+
+    def get(self, request):
+        form = self.form(instance=request.user)
+        return render(request, self.template_name, {'form': form})
+
+    def post(self, request):
+        form = self.form(request.POST, request.FILES, instance=request.user)
+        if form.is_valid():
+            form.save()
+            # request.user.image = request.FILES.get('image')
+            # request.user.save()
+        return redirect('accounts:user_profile')

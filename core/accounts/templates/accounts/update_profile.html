@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_headers %}
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{% static 'accounts/css/bootstrap.min.css' %}">
+    <!-- Main Style CSS -->
+    <link rel="stylesheet" href="{% static 'accounts/css/style.css' %}">
+
+{% endblock %}
+
+{% block content %}
+
+    <!--Page Title-->
+    <div class="page section-header text-center">
+        <div class="page-title">
+            <div class="wrapper"><h1 class="page-width">Update INFO</h1></div>
+        </div>
+    </div>
+    <!--End Page Title-->
+
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-sm-12 col-md-6 col-lg-6 main-col offset-md-3">
+                <div class="mb-4">
+                   <form method="post" action="" class="contact-form" enctype='multipart/form-data'>
+                      {% csrf_token %}
+                       {% for field in form %}
+                           <div class="row">
+                            <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                <div class="form-group">
+                                    {{field.label_tag}}
+                                    {{ field.errors }}
+                                    {{ field }}
+                                </div>
+                            </div>
+                          </div>
+                       {% endfor %}
+                      <div class="row">
+                        <div class="text-center col-12 col-sm-12 col-md-12 col-lg-12">
+                            <input type="submit" class="btn mb-3" value="Update">
+                        </div>
+                     </div>
+                 </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

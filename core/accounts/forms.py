@@ -38,3 +38,13 @@ class UserRegistrationForm(forms.Form):
 class UserLoginForm(forms.Form):
     email = forms.CharField()
     password = forms.CharField(widget=forms.PasswordInput)
+
+
+class UserChangeForm(forms.ModelForm):
+    full_name = forms.CharField(label='full name')
+    phone_number = forms.CharField(max_length=11, validators=[RegexValidator(r'^\+?1?\d{9,10}$')])
+    image = forms.ImageField(widget=forms.FileInput(attrs={'class': 'form-control-file'}))
+
+    class Meta:
+        model = User
+        fields = ['full_name', 'phone_number', 'image']

@@ -11,4 +11,6 @@ urlpatterns = [
     path('password-change/', views.ChangePasswordView.as_view(), name='password_change'),
     path('address/', views.UserAddressView.as_view(), name='user_address'),
     path('add-address/', views.AddressCreationView.as_view(), name='user_add_address'),
+    path('edit-address/<int:address_id>/', views.EditAddressView.as_view(), name='user_edit_address'),
+    path('remove-address/<int:address_id>/', views.AddressRemoveView.as_view(), name='user_remove_address'),
 ]

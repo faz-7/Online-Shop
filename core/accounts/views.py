@@ -1,6 +1,6 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
-from .forms import UserLoginForm, UserRegistrationForm, UserChangeForm, AddressCreationForm
+from .forms import UserLoginForm, UserRegistrationForm, UserChangeForm, AddressCreationForm, AddressEditForm
 from django.contrib import messages
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -41,6 +41,10 @@ class UserLoginView(View):
     form = UserLoginForm
     template_name = 'accounts/login.html'
 
+    def setup(self, request, *args, **kwargs):
+        self.next = request.GET.get('next')
+        return super().setup(request, *args, **kwargs)
+
     def get(self, request):
         form = self.form
         return render(request, self.template_name, {'form': form})
@@ -53,6 +57,8 @@ class UserLoginView(View):
             if user is not None:
                 login(request, user)
                 messages.success(request, f'{user.full_name} Logged in successfully', 'info')
+                if self.next:
+                    return redirect(self.next)
                 return redirect('products:landing')
             messages.error(request, 'email or password is wrong', 'warning')
         return render(request, self.template_name, {'form': form})
@@ -104,7 +110,33 @@ class AddressCreationView(LoginRequiredMixin, View):
         form = self.form_class(request.POST)
         if form.is_valid():
             cd = form.cleaned_data
-            Address.objects.create(user=request.user, province=cd['province'], city=cd['city'], avenue=cd['avenue'], plate=cd['plate'])
+            Address.objects.create(user=request.user, province=cd['province'], city=cd['city'], avenue=cd['avenue'],
+                                   plate=cd['plate'])
             messages.success(request, 'address added successfully', 'success')
-            return redirect('accounts:user_profile')
+            return redirect(request.GET.get('next', 'accounts:user_profile'))
         return render(request, self.template_name, {'form': form})
+
+
+class EditAddressView(LoginRequiredMixin, View):
+    template_name = 'accounts/edit_address.html'
+    form = AddressEditForm
+
+    def get(self, request, address_id):
+        address = get_object_or_404(Address, id=address_id)
+        form = self.form(instance=address)
+        return redirect(request, self.template_name, {'address': address, 'form': form})
+
+    def post(self, request, address_id):
+        address = get_object_or_404(Address, id=address_id)
+        form = self.form(request.POST, instance=address)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'address edited successfully', 'success')
+        return redirect('accounts:user_address')
+
+
+class AddressRemoveView(LoginRequiredMixin, View):
+    def get(self, request, address_id):
+        address = get_object_or_404(Address, id=address_id)
+        address.delete()
+        return redirect('accounts:user_address')

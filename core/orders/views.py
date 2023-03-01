@@ -39,7 +39,8 @@ class CartRemoveView(View):
 class OrderDetailView(LoginRequiredMixin, View):
     def get(self, request, order_id):
         order = get_object_or_404(Order, id=order_id)
-        return render(request, 'orders/order.html', {'order': order})
+        items = OrderItem.objects.filter(order=order)
+        return render(request, 'orders/order.html', {'order': order, 'items': items})
 
 
 class OrderCreateView(LoginRequiredMixin, View):

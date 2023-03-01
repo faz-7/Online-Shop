@@ -30,6 +30,8 @@
               <th class="text-center">City</th>
               <th class="text-center">Avenue</th>
               <th class="text-center">Plate</th>
+              <th class="text-center">Edit</th>
+              <th class="text-center">Remove</th>
             </tr>
           </thead>
 
@@ -39,9 +41,11 @@
 
                   <td>{{ address.id }}</td>
                   <td class="text-center">{{ address.province }}</td>
-                  <td class="text-center">{{ address.city }}$</td>
+                  <td class="text-center">{{ address.city }}</td>
                   <td class="text-center">{{ address.avenue }}</td>
                   <td class="text-center">{{ address.plate }}</td>
+                  <td class="text-center small--hide"><a href="{% url 'accounts:user_edit_address' address.id %}" title="edit tem"><i class="fa fa-edit"></i></a></td>
+                  <td class="text-center small--hide"><a href="{% url 'accounts:user_remove_address' address.id %}" title="Remove tem"><i class="fa fa-trash-o"></i></a></td>
 
                 <tr class="spacer"><td colspan="100"></td></tr>
             {% endfor %}
@@ -50,7 +54,7 @@
 
          <tfoot>
             <tr>
-                <td colspan="5" class="text-left"><a href="{% url 'accounts:user_add_address' %}" class="btn--link cart-continue"><i class="fa fa-plus-circle"></i> Continue shopping</a></td>
+                <td colspan="5" class="text-left"><a href="{% url 'accounts:user_add_address' %}?next={{ request.path|urlencode }}" class="btn--link cart-continue"><i class="fa fa-plus-circle"></i> Add new address</a></td>
             </tr>
          </tfoot>
         </table>

@@ -54,3 +54,15 @@ class AddressCreationForm(forms.ModelForm):
     class Meta:
         model = Address
         fields = ['province', 'city', 'avenue', 'plate']
+
+
+class AddressEditForm(forms.ModelForm):
+    province = forms.CharField(max_length=50)
+    city = forms.CharField(max_length=50)
+    avenue = forms.CharField(max_length=50)
+    plate = forms.CharField(max_length=3, validators=[RegexValidator(r'^\d{1,10}$')])
+
+    class Meta:
+        model = Address
+        fields = ['province', 'city', 'avenue', 'plate']
+

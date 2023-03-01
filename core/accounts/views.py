@@ -7,6 +7,9 @@ from django.contrib import messages
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import User
+from django.urls import reverse_lazy
+from django.contrib.auth.views import PasswordChangeView
+from django.contrib.messages.views import SuccessMessageMixin
 
 
 class UserRegisterView(View):
@@ -74,6 +77,10 @@ class UserUpdateProfileView(LoginRequiredMixin, View):
         form = self.form(request.POST, request.FILES, instance=request.user)
         if form.is_valid():
             form.save()
-            # request.user.image = request.FILES.get('image')
-            # request.user.save()
         return redirect('accounts:user_profile')
+
+
+class ChangePasswordView(SuccessMessageMixin, PasswordChangeView):
+    template_name = 'accounts/change_password.html'
+    success_message = "Successfully Changed Your Password"
+    success_url = reverse_lazy('accounts:user_profile')

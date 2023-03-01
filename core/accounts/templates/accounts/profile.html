@@ -34,7 +34,7 @@
                             <h5 class="my-3">{{ request.user.full_name }}</h5>
 
                                 <a href="{% url 'accounts:user_update_profile' %}" class="button-17" style="width: 150px" role="button">Edit Profile</a><br><br>
-                                <a href="#" class="button-17" style="width: 150px" role="button">Address</a><br><br>
+                                <a href="{% url 'accounts:user_address' %}" class="button-17" style="width: 150px" role="button">Address</a><br><br>
                                 <a href="{% url 'orders:order_history' %}" class="button-17" style="width: 150px" role="button">Order History</a>
 
 

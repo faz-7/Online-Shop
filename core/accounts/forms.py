@@ -1,7 +1,7 @@
 from django.contrib.auth.password_validation import validate_password
 from django.core.validators import RegexValidator
 
-from .models import User
+from .models import User, Address
 from django.core.exceptions import ValidationError
 from django import forms
 
@@ -48,3 +48,9 @@ class UserChangeForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ['full_name', 'phone_number', 'image']
+
+
+class AddressCreationForm(forms.ModelForm):
+    class Meta:
+        model = Address
+        fields = ['province', 'city', 'avenue', 'plate']

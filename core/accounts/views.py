@@ -1,12 +1,10 @@
-import os
-
 from django.shortcuts import render, redirect
 from django.views import View
-from .forms import UserLoginForm, UserRegistrationForm, UserChangeForm
+from .forms import UserLoginForm, UserRegistrationForm, UserChangeForm, AddressCreationForm
 from django.contrib import messages
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .models import User
+from .models import User, Address
 from django.urls import reverse_lazy
 from django.contrib.auth.views import PasswordChangeView
 from django.contrib.messages.views import SuccessMessageMixin
@@ -80,7 +78,33 @@ class UserUpdateProfileView(LoginRequiredMixin, View):
         return redirect('accounts:user_profile')
 
 
-class ChangePasswordView(SuccessMessageMixin, PasswordChangeView):
+class ChangePasswordView(LoginRequiredMixin, SuccessMessageMixin, PasswordChangeView):
     template_name = 'accounts/change_password.html'
     success_message = "Successfully Changed Your Password"
     success_url = reverse_lazy('accounts:user_profile')
+
+
+class UserAddressView(LoginRequiredMixin, View):
+    template_name = 'accounts/address.html'
+
+    def get(self, request):
+        addresses = Address.objects.filter(user=request.user)
+        return render(request, self.template_name, {'addresses': addresses})
+
+
+class AddressCreationView(LoginRequiredMixin, View):
+    template_name = 'accounts/add_address.html'
+    form_class = AddressCreationForm
+
+    def get(self, request):
+        form = self.form_class
+        return render(request, self.template_name, {'form': form})
+
+    def post(self, request):
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            cd = form.cleaned_data
+            Address.objects.create(user=request.user, province=cd['province'], city=cd['city'], avenue=cd['avenue'], plate=cd['plate'])
+            messages.success(request, 'address added successfully', 'success')
+            return redirect('accounts:user_profile')
+        return render(request, self.template_name, {'form': form})

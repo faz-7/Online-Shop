@@ -39,6 +39,8 @@ class CartRemoveView(View):
 
 class OrderDetailView(LoginRequiredMixin, View):
     def get(self, request, order_id):
+        if len(request.user.addresses.all) == 0:
+            return redirect('accounts:user_add_address')
         order = get_object_or_404(Order, id=order_id)
         items = OrderItem.objects.filter(order=order)
         return render(request, 'orders/order.html', {'order': order, 'items': items})

@@ -1,8 +1,9 @@
-from django.urls import path
+from django.urls import path, include
 from . import views
 
 app_name = 'orders'
 urlpatterns = [
+    path('api/v1/', include('orders.api.v1.urls')),
     path('create/', views.OrderCreateView.as_view(), name='order_create'),
     path('detail/<int:order_id>/', views.OrderDetailView.as_view(), name='order_detail'),
     path('cart/', views.CartView.as_view(), name='cart'),

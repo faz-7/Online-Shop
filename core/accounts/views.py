@@ -25,6 +25,10 @@ class UserRegisterView(View):
             User.objects.create_user(cd['email'], cd['password'], phone_number=cd['phone_number'],
                                      full_name=cd['full_name'])
 
+            user = authenticate(request, email=cd['email'], password=cd['password'])
+            if user is not None:
+                login(request, user)
+                
             messages.success(request, 'registered successfully', 'success')
             return redirect('products:landing')
         return render(request, self.template_name, {'form': form})

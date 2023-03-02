@@ -88,7 +88,9 @@
 
                             <div class="d-flex justify-content-end" style="font-family: Roboto Slab,Helvetica,Tahoma,Arial,serif;">
                               <div class="btn-light btn-lg me-2">Total: {{ cart.get_total_price }}$</div>
-                              <a href="{% url 'orders:order_create' %}" type="button" class="btn btn-lg" style="background-color: lightskyblue; font-family: Roboto Slab,Helvetica,Tahoma,Arial,serif;">Checkout</a>
+                                {% if cart.get_total_price > 0 %}
+                                    <a href="{% url 'orders:order_create' %}" type="button" class="btn btn-lg" style="background-color: lightskyblue; font-family: Roboto Slab,Helvetica,Tahoma,Arial,serif;">Checkout</a>
+                                {% endif %}
                             </div>
 
                     </div>

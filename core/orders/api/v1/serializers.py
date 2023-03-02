@@ -7,7 +7,7 @@ from products.models import Product
 class OrderItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = OrderItem
-        fields = ['order', 'product', 'quantity', 'price']
+        fields = ['order', 'product', 'quantity']
 
 
 class OrderSerializer(serializers.ModelSerializer):

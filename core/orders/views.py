@@ -4,6 +4,7 @@ from .cart import Cart
 from products.models import Product
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Order, OrderItem
+from accounts.models import Address
 
 
 class CartView(View):
@@ -41,6 +42,13 @@ class OrderDetailView(LoginRequiredMixin, View):
         order = get_object_or_404(Order, id=order_id)
         items = OrderItem.objects.filter(order=order)
         return render(request, 'orders/order.html', {'order': order, 'items': items})
+
+    def post(self, request, order_id):
+        order = get_object_or_404(Order, id=order_id)
+        order.paid = True
+        order.save()
+        address = get_object_or_404(Address, id=request.POST.get('select_address'))
+        return render(request, 'orders/pay.html', {'address': address})
 
 
 class OrderCreateView(LoginRequiredMixin, View):

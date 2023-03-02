@@ -65,33 +65,34 @@
 
                         <hr/>
 
+                    {% if not order.paid %}
                         <div class="your-payment">
                             <h2 class="payment-title mb-3">Address</h2>
-
-                            <div class="payment-method">
-                                <div class="payment-accordion">
-                                    <div id="accordion" class="payment-section">
-                                        <div class="card mb-2">
-                                            <select class="select" data-mdb-placeholder="Choose desire address">
-                                                {% for address in request.user.addresses.all %}
-                                                    <option value="{{ address.id }}">{{ address.province }}-{{ address.city }}-{{ address.avenue }}-{{ address.plate }}</option>
-                                                {% endfor %}
-                                            </select>
-                                        </div>
-                                        <div>
-                                            <a href="{% url 'accounts:user_add_address' %}?next={{ request.path|urlencode }}">Add address</a>
+                            <form method="post" action="">
+                                <div class="payment-method">
+                                    <div class="payment-accordion">
+                                        <div id="accordion" class="payment-section">
+                                            <div class="card mb-2">
+                                                {% csrf_token %}
+                                                <select name="select_address" class="select" data-mdb-placeholder="Choose desire address">
+                                                    {% for address in request.user.addresses.all %}
+                                                        <option value="{{ address.id }}">{{ address.province }}-{{ address.city }}-{{ address.avenue }}-{{ address.plate }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                            <div>
+                                                <a href="{% url 'accounts:user_add_address' %}?next={{ request.path|urlencode }}">Add address</a>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-
-                                {% if not order.paid %}
                                     <div class="order-button-payment">
-                                        <button class="btn" value="Place order" type="submit">Pay</button>
+                                        <input type="submit" name="add" class="btn product-form__cart-submit" value="Pay">
                                     </div>
-                                {% endif %}
 
-                            </div>
+                                </div>
+                            </form>
                         </div>
+                    {% endif %}
                     </div>
                 </div>
             </div>

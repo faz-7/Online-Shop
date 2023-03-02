@@ -119,16 +119,16 @@ class AddressCreationView(LoginRequiredMixin, View):
 
 class EditAddressView(LoginRequiredMixin, View):
     template_name = 'accounts/edit_address.html'
-    form = AddressEditForm
+    form_class = AddressEditForm
 
     def get(self, request, address_id):
         address = get_object_or_404(Address, id=address_id)
-        form = self.form(instance=address)
-        return redirect(request, self.template_name, {'address': address, 'form': form})
+        form = self.form_class(instance=address)
+        return render(request, self.template_name, {'address': address, 'form': form})
 
     def post(self, request, address_id):
         address = get_object_or_404(Address, id=address_id)
-        form = self.form(request.POST, instance=address)
+        form = self.form_class(request.POST, instance=address)
         if form.is_valid():
             form.save()
             messages.success(request, 'address edited successfully', 'success')

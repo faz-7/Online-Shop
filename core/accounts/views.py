@@ -106,6 +106,10 @@ class AddressCreationView(LoginRequiredMixin, View):
     template_name = 'accounts/add_address.html'
     form_class = AddressCreationForm
 
+    def setup(self, request, *args, **kwargs):
+        self.next = request.GET.get('next')
+        return super().setup(request, *args, **kwargs)
+
     def get(self, request):
         form = self.form_class
         return render(request, self.template_name, {'form': form})
@@ -117,6 +121,8 @@ class AddressCreationView(LoginRequiredMixin, View):
             Address.objects.create(user=request.user, province=cd['province'], city=cd['city'], avenue=cd['avenue'],
                                    plate=cd['plate'])
             messages.success(request, 'address added successfully', 'success')
+            if self.next:
+                return redirect(self.next)
             return redirect(request.GET.get('next', 'accounts:user_profile'))
         return render(request, self.template_name, {'form': form})
 

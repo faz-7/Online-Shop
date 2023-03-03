@@ -2,6 +2,7 @@ from django.core.exceptions import ValidationError
 from django.core.validators import RegexValidator
 from django.db import models
 from django.urls import reverse
+from django.shortcuts import get_object_or_404
 
 
 class Category(models.Model):
@@ -38,10 +39,13 @@ class Product(models.Model):
         return self.name
 
     def get_final_price(self):
-        discount = Discount.objects.get(product=self)
-        if discount.type == 'P':
-            return self.price * (1 - discount.amount / 100)
-        return self.price - discount.amount
+        try:
+            discount = Discount.objects.get(product=self)
+            if discount.type == 'P':
+                return self.price * (1 - discount.amount / 100)
+            return self.price - discount.amount
+        except Exception:
+            return self.price
 
 
 class Discount(models.Model):  # todo: write validation for amount not greater than 100% or amount

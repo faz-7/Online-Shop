@@ -33,13 +33,10 @@ class OrderCreateAPIView(APIView):
 
     def post(self, request):
         cart = Cart(request)
-        print(cart.cart.items())
         order = Order.objects.create(user=request.user)
         order.save()
         for item in cart:
-            print(item)
             id_product = int(item['id_product'])
-            print(id_product)
             product = Product.objects.get(pk=id_product)
             quantity = int(item['quantity'])
             order_item = OrderItem.objects.create(order=order, product=product, quantity=quantity)
@@ -56,6 +53,5 @@ class OrderDetailAPIView(APIView):
 
     def post(self, request, order_id):
         order = get_object_or_404(Order, id=order_id)
-        items = (order.items.all())
         ser_data = OrderItemSerializer(order.items.all(), many=True)
         return Response(ser_data.data, status=status.HTTP_200_OK)

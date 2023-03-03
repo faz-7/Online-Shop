@@ -45,7 +45,7 @@
                                     {% for item in items %}
                                         <tr>
                                             <td class="text-left">{{ item.product.name }}</td>
-                                            <td>{{ item.product.price }}</td>
+                                            <td>{{ item.product.get_final_price }}</td>
                                             <td>{{ item.quantity }}</td>
                                             <td>{{ item.get_cost }}</td>
                                         </tr>

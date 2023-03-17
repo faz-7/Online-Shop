@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_headers %}
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{% static 'accounts/css/bootstrap.min.css' %}">
+    <!-- Main Style CSS -->
+    <link rel="stylesheet" href="{% static 'accounts/css/style.css' %}">
+
+{% endblock %}
+
+{% block content %}
+    <div id="page-content">
+        <!--Page Title-->
+        <div class="page section-header text-center">
+            <div class="page-title">
+                <div class="wrapper"><h1 class="page-width">Checkout</h1></div>
+            </div>
+        </div>
+        <!--End Page Title-->
+
+        <div class="container">
+            <div class="row">
+
+                <div class="col-12 col-sm-12 col-md-6 col-lg-6 main-col offset-md-3"
+                     style="text-align: center; background-color: #d6d8db">
+                    <div class="your-order-payment">
+                        <div class="your-order">
+                            <h2 class="order-title mb-4">Your Order</h2>
+
+                            <div class="table-responsive-sm order-table">
+                                <table class="bg-white table table-bordered table-hover text-center">
+
+                                    <thead>
+                                    <tr>
+                                        <th class="text-left">Product Name</th>
+                                        <th>Price</th>
+                                        <th>Qty</th>
+                                        <th>Total</th>
+                                    </tr>
+                                    </thead>
+
+                                    <tbody>
+                                    {% for item in items %}
+                                        <tr>
+                                            <td class="text-left">{{ item.product.name }}</td>
+                                            <td>{{ item.product.get_final_price }}</td>
+                                            <td>{{ item.quantity }}</td>
+                                            <td>{{ item.get_cost }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+
+                                    <tfoot class="font-weight-600">
+                                    <tr>
+                                        <td colspan="3" class="text-right">Total</td>
+                                        <td>{{ order.get_total_price }}$</td>
+                                    </tr>
+                                    </tfoot>
+
+                                </table>
+                            </div>
+                        </div>
+
+                        <hr/>
+
+                    {% if not order.paid %}
+                        <div class="your-payment">
+                            <h2 class="payment-title mb-3">Address</h2>
+                            <form method="post" action="">
+                                <div class="payment-method">
+                                    <div class="payment-accordion">
+                                        <div id="accordion" class="payment-section">
+                                            <div class="card mb-2">
+                                                {% csrf_token %}
+                                                <select name="select_address" class="select" data-mdb-placeholder="Choose desire address">
+                                                    {% for address in request.user.addresses.all %}
+                                                        <option value="{{ address.id }}">{{ address.province }}-{{ address.city }}-{{ address.avenue }}-{{ address.plate }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                            <div>
+                                                <a href="{% url 'accounts:user_add_address' %}?next={{ request.path|urlencode }}">Add address</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="order-button-payment">
+                                        <input type="submit" name="add" class="btn product-form__cart-submit" value="Pay">
+                                    </div>
+
+                                </div>
+                            </form>
+                        </div>
+                    {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% block scripts %}
+
+        {% include 'product/include/scripts.html' %}
+        <script src="{% static 'products/js/jquery.min.js' %}"></script>
+        <script src="{% static 'products/js/popper.js' %}"></script>
+        <script src="{% static 'products/js/quantity.js' %}"></script>
+
+    {% endblock %}
+
+{% endblock %}

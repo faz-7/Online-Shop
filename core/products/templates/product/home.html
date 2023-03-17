@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_headers %}
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{% static 'accounts/css/bootstrap.min.css' %}">
+    <!-- Main Style CSS -->
+    <link rel="stylesheet" href="{% static 'accounts/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'products/css/category.css' %}">
+
+{% endblock %}
+
+{% block content %}
+
+    <!--Body Content-->
+    <div id="page-content" class="container d-md-flex align-items-stretch">
+        <nav id="sidebar" style="background-color: lightgrey">
+            <div class="p-4 pt-5">
+                <h5 style="text-align: center">Categories</h5>
+                <ul class="list-unstyled components mb-5">
+
+                    {% for category in categories %}
+                        <li>
+                            <a href="{{ category.get_absolute_url }}" >
+                                <span style="color: #0c0101" >{{ category.name }}</span>
+                                <a href="#dropdown" style="display: inline-block" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"></a>
+                            </a>
+                            {% for sub in category.children.all %}
+                              <ul class="collapse list-unstyled" id="dropdown">
+                                  <li><a href="{{ sub.get_absolute_url }}"><span class="fa fa-chevron-right mr-2"></span>{{ sub.name }}</a></li>
+                              </ul>
+                            {% endfor %}
+                        </li>
+                    {% endfor %}
+
+                </ul>
+            </div>
+        </nav>
+
+        <!--Hand-picked Items-->
+        <div class="p-4 p-md-5 pt-5">
+        	<div class="container-fluid">
+            	<div class="row">
+                	<div class="col-12 col-sm-12 col-md-12 col-lg-12">
+						<div class="grid-products">
+                            <div class="row">
+                                {% for product in products %}
+                                    <div class="col-6 col-sm-6 col-md-3 col-lg-3 item">
+                                        <!-- start product image -->
+                                        <div class="product-image">
+                                            <!-- start product image -->
+                                            <a href="{{ product.get_absolute_url }}" class="grid-view-item__link">
+                                                <!-- image -->
+                                                <img class="primary blur-up lazyload" src="{{ product.image.url }}" alt="image" title="product">
+                                                <img class="hover blur-up lazyload" src="{{ product.image.url }}" alt="image" title="product">
+                                                <!-- End image -->
+                                            </a>
+                                            <!-- end product image -->
+
+                                            <!-- Start product button -->
+                                            <form class="variants add" action="" onclick="window.location.href='{% url 'products:product_detail' product.id %}'" method="post" enctype="multipart/form-data">
+                                                <button class="btn btn--link" type="button" tabindex="0">View</button>
+                                            </form>
+                                            <!-- end product button -->
+                                        </div>
+                                        <!-- end product image -->
+
+                                        <!--start product details -->
+                                        <div class="product-details text-center">
+                                            <!-- product name -->
+                                            <div class="product-name">
+                                                <a href="{{ product.get_absolute_url }}" class="card-title">{{ product.name }}</a>
+                                            </div>
+                                            <!-- End product name -->
+                                        </div>
+                                        <!-- End product details -->
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+        <!--End Hand-picked Items-->
+
+     {% block scripts %}
+
+         {% include 'product/include/scripts.html' %}
+         <script src="{% static 'products/js/jquery.min.js' %}"></script>
+         <script src="{% static 'products/js/popper.js' %}"></script>
+
+    {% endblock %}
+
+{% endblock %}

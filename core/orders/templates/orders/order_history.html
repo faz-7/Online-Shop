@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_headers %}
+
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{% static 'accounts/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'orders/css/table_style.css' %}">
+    <!-- Main Style CSS -->
+    <link rel="stylesheet" href="{% static 'accounts/css/style.css' %}">
+
+{% endblock %}
+
+{% block content %}
+
+    <div class="content">
+
+    <div class="container">
+      <h2 class="mb-5" style="text-align: center;">Order History</h2>
+
+
+      <div class="table-responsive custom-table-responsive">
+
+        <table class="table custom-table">
+          <thead>
+            <tr>
+              <th>Order</th>
+              <th class="text-center">Items</th>
+              <th class="text-center">Price</th>
+              <th class="text-center">Creation</th>
+              <th>Paid</th>
+            </tr>
+          </thead>
+
+          <tbody>
+
+            {% for order in orders %}
+
+                  <td>{{ order.id }}</td>
+                  <td class="text-center"><a href="{% url 'orders:order_detail' order.id %}">{{ order.items.count }}</a></td>
+                  <td class="text-center">{{ order.get_total_price }}$</td>
+                  <td class="text-center">{{ order.created }}</td>
+                  <td style="color: green">{{ order.paid }}</td>
+
+
+                <tr class="spacer"><td colspan="100"></td></tr>
+            {% endfor %}
+
+          </tbody>
+        </table>
+      </div>
+
+
+    </div>
+
+  </div>
+
+{% endblock %}

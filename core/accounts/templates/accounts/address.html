@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_headers %}
+
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{% static 'accounts/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'orders/css/table_style.css' %}">
+    <!-- Main Style CSS -->
+    <link rel="stylesheet" href="{% static 'accounts/css/style.css' %}">
+
+{% endblock %}
+
+{% block content %}
+
+    <div class="page-content">
+
+    <div class="container">
+      <h2 class="mb-5" style="text-align: center;">Addresses</h2>
+
+
+      <div class="table-responsive custom-table-responsive">
+
+        <table class="table custom-table">
+          <thead>
+            <tr>
+              <th>Address</th>
+              <th class="text-center">Province</th>
+              <th class="text-center">City</th>
+              <th class="text-center">Avenue</th>
+              <th class="text-center">Plate</th>
+              <th class="text-center">Edit</th>
+              <th class="text-center">Remove</th>
+            </tr>
+          </thead>
+
+          <tbody>
+
+            {% for address in addresses %}
+
+                  <td>{{ address.id }}</td>
+                  <td class="text-center">{{ address.province }}</td>
+                  <td class="text-center">{{ address.city }}</td>
+                  <td class="text-center">{{ address.avenue }}</td>
+                  <td class="text-center">{{ address.plate }}</td>
+                  <td class="text-center small--hide"><a href="{% url 'accounts:user_edit_address' address.id %}" title="edit tem"><i class="fa fa-edit"></i></a></td>
+                  <td class="text-center small--hide"><a href="{% url 'accounts:user_remove_address' address.id %}" title="Remove tem"><i class="fa fa-trash-o"></i></a></td>
+
+                <tr class="spacer"><td colspan="100"></td></tr>
+            {% endfor %}
+
+          </tbody>
+
+         <tfoot>
+            <tr>
+                <td colspan="5" class="text-left"><a href="{% url 'accounts:user_add_address' %}?next={{ request.path|urlencode }}" class="btn--link cart-continue"><i class="fa fa-plus-circle"></i> Add new address</a></td>
+            </tr>
+         </tfoot>
+        </table>
+      </div>
+
+
+    </div>
+
+  </div>
+
+{% endblock %}

@@ -8,4 +8,4 @@ The Onlineshop is a virtual store on the Internet where customers can browse the
 
 ## shop view
 
-![img](https://freeimage.host/i/HXyXVKN)
+[![HXyXVKN.md.png](https://iili.io/HXyXVKN.md.png)](https://freeimage.host/i/HXyXVKN)

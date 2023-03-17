@@ -8,4 +8,4 @@ The Onlineshop is a virtual store on the Internet where customers can browse the
 
 ## screen shots
 
-[![N|Solid](https://freeimage.host/i/HXyXVKN)]
+[![N|Solid](https://freeimage.host/i/HXyXVKN)

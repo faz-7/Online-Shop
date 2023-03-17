@@ -4,3 +4,8 @@ The Onlineshop is a virtual store on the Internet where customers can browse the
 
 [![Python Version](https://img.shields.io/badge/python-3.10-brightgreen.svg)](https://python.org)
 [![Django Version](https://img.shields.io/badge/django-4.1.6-brightgreen.svg)](https://djangoproject.com)
+
+
+## screen shots
+
+[![N|Solid](https://freeimage.host/i/HXyXVKN)]
